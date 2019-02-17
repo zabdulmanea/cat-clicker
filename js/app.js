@@ -32,6 +32,33 @@ $(function () {
     };
 
     /* ====== OCTOPUS ====== */
+    var octopus = {
+
+        init: function () {
+            // set our current cat to the first on the list
+            model.currentCat = model.cats[0];
+
+            // tell our views to initialize
+
+        },
+
+        getCats: function () {
+            return model.cats;
+        },
+
+        getCurrentCat: function () {
+            return model.currentCat;
+        },
+
+        setCurrentCat: function (cat) {
+            model.currentCat = cat;
+        },
+
+        incrementCounter: function () {
+            model.currentCat.clickCount++;
+        }
+    };
 
     /* ====== VIEW ====== */
+    
 }());
