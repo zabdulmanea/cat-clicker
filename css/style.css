@@ -7,7 +7,7 @@ html, body {
     height: 100%;
 }
 
-.container {         
+.container {
     margin: 0px;
     padding: 0px;
     height: 100%;
@@ -15,15 +15,13 @@ html, body {
     grid-template-columns: 20% auto;
 }
 
-.cats-list{
-    background-color:cornsilk;
+.cats-list {
+    background-color: cornsilk;
 }
 
-.cat-content{
+.cat-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
 }
-
-.cats-list a { display:block; }
