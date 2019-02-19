@@ -20,8 +20,14 @@ html, body {
 }
 
 .cat-content {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: center; */
     text-align: center;
+}
+
+.admin-opt {
+    text-align: left;
+    margin: 10px;
+    padding: 10px;
 }

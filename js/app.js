@@ -39,6 +39,7 @@ var octopus = {
         // tell our views to initialize
         catListView.init();
         catView.init();
+        adminView.init();
     },
 
     getCurrentCat: function () {
@@ -58,6 +59,15 @@ var octopus = {
     incrementCounter: function () {
         model.currentCat.clickCount++;
         catView.render();
+    },
+
+    updateForm: function (cat) {
+
+        model.currentCat.name = document.getElementById('name-text').value;
+        model.currentCat.imgSrc = document.getElementById('img-url-text').value;
+        model.currentCat.clickCount = document.getElementById('clicks-text').value;
+        catView.render();
+        catListView.render();
     }
 };
 
@@ -121,6 +131,7 @@ var catListView = {
                 return function () {
                     octopus.setCurrentCat(catCopy);
                     catView.render();
+                    adminView.render();
                 };
             })(cat));
 
@@ -129,6 +140,82 @@ var catListView = {
         }
     }
 };
+
+var adminView = {
+    init: function () {
+        this.adminBtnElem = document.getElementById('admin-btn');
+        this.adminFormElem = document.getElementById('admin-form');
+
+        this.render();
+
+
+    },
+
+    render: function () {
+        // get the cats we'll be rendering from the octopus
+        var cat = octopus.getCurrentCat();
+
+        // empty the cat admin form
+        this.adminFormElem.innerHTML = '';
+
+        // on click admin button, view the admin form
+        this.adminBtnElem.addEventListener('click', function () {
+
+            // empty the adim form
+            while (adminView.adminFormElem.firstChild) {
+                adminView.adminFormElem.removeChild(adminView.adminFormElem.firstChild);
+            }
+
+            var label_list = ['Name', 'Image URL', '#Clicks'];
+            var input_list = [cat.name, cat.imgSrc, cat.clickCount];
+            var input_ids = ['name-text', 'img-url-text', 'clicks-text'];
+            var brElem = document.createElement('br');
+
+            // render the admin label and text
+            for (var i = 0; i < label_list.length; i++) {
+
+                var labelElem = document.createElement('label');
+                labelElem.textContent = label_list[i];
+
+                adminView.adminFormElem.appendChild(labelElem);
+
+                var textElem = document.createElement('input');
+                textElem.setAttribute('type', 'text');
+                textElem.setAttribute('value', input_list[i]);
+                textElem.setAttribute('id', input_ids[i]);
+                adminView.adminFormElem.appendChild(textElem);
+                adminView.adminFormElem.appendChild(brElem);
+            }
+
+            // render the save and cancel button
+            var cancelElem = document.createElement('input');
+            cancelElem.setAttribute('type', 'button');
+            cancelElem.setAttribute('value', 'Cancel');
+            cancelElem.setAttribute('id', 'cancel-btn');
+            adminView.adminFormElem.appendChild(cancelElem);
+            cancelElem.onclick = cancelEvent;
+
+            var saveElem = document.createElement('input');
+            saveElem.setAttribute('type', 'button');
+            saveElem.setAttribute('value', 'Save');
+            saveElem.setAttribute('id', 'save-btn');
+            adminView.adminFormElem.appendChild(saveElem);
+            saveElem.onclick = saveEvent;
+        });
+
+        // on click save, update the cat information
+        function saveEvent() {
+            octopus.updateForm(cat);
+        };
+
+        // on click cancel, hide the admin form
+        function cancelEvent() {
+            while (adminView.adminFormElem.firstChild) {
+                adminView.adminFormElem.removeChild(adminView.adminFormElem.firstChild);
+            }
+        };
+    }
+}
 
 // make it go!
 octopus.init();
