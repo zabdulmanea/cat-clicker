@@ -206,6 +206,7 @@ var adminView = {
         // on click save, update the cat information
         function saveEvent() {
             octopus.updateForm(cat);
+            cancelEvent();
         };
 
         // on click cancel, hide the admin form
